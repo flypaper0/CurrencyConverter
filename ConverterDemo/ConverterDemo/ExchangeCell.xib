@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ExchangeCell" id="pen-Gx-gX1" customClass="ExchangeCell">
+            <rect key="frame" x="0.0" y="0.0" width="347" height="143"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="347" height="143"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GBP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90C-Rn-PoZ">
+                        <rect key="frame" x="30" y="30" width="75.5" height="33"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="33" id="45f-jw-AAH"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="40"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have £ 92.76" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61K-HO-QT4">
+                        <rect key="frame" x="30" y="74" width="105.5" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.81960784310000001" green="0.16078431369999999" blue="0.2156862745" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="- 548" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hej-6V-qhU">
+                        <rect key="frame" x="105.5" y="30" width="211.5" height="33"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="40"/>
+                        <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <outlet property="delegate" destination="pen-Gx-gX1" id="Al8-aP-IVG"/>
+                        </connections>
+                    </textField>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="61K-HO-QT4" firstAttribute="top" secondItem="90C-Rn-PoZ" secondAttribute="bottom" constant="11" id="6wy-0X-aUI"/>
+                <constraint firstAttribute="trailing" secondItem="Hej-6V-qhU" secondAttribute="trailing" constant="30" id="Fgp-1O-iKD"/>
+                <constraint firstItem="61K-HO-QT4" firstAttribute="leading" secondItem="90C-Rn-PoZ" secondAttribute="leading" id="Pud-fq-cwW"/>
+                <constraint firstItem="Hej-6V-qhU" firstAttribute="leading" secondItem="90C-Rn-PoZ" secondAttribute="trailing" id="Smw-YT-2ie"/>
+                <constraint firstItem="Hej-6V-qhU" firstAttribute="bottom" secondItem="90C-Rn-PoZ" secondAttribute="bottom" id="V4d-Zp-KcK"/>
+                <constraint firstItem="90C-Rn-PoZ" firstAttribute="leading" secondItem="pen-Gx-gX1" secondAttribute="leading" constant="30" id="dBk-ws-soI"/>
+                <constraint firstItem="Hej-6V-qhU" firstAttribute="top" secondItem="90C-Rn-PoZ" secondAttribute="top" id="gqM-Fp-qr6"/>
+                <constraint firstItem="90C-Rn-PoZ" firstAttribute="top" secondItem="pen-Gx-gX1" secondAttribute="top" constant="30" id="ytU-FQ-je8"/>
+            </constraints>
+            <size key="customSize" width="347" height="50"/>
+            <connections>
+                <outlet property="balanceLabel" destination="61K-HO-QT4" id="Wq9-n3-Pvu"/>
+                <outlet property="currencyLabel" destination="90C-Rn-PoZ" id="zvk-qn-Hkm"/>
+                <outlet property="valueTextField" destination="Hej-6V-qhU" id="MoM-tn-GEJ"/>
+            </connections>
+            <point key="canvasLocation" x="61.5" y="295.5"/>
+        </collectionViewCell>
+    </objects>
+</document>
