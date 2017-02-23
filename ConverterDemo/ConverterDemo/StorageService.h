@@ -11,6 +11,7 @@
 
 
 @protocol StorageServiceDelegate <NSObject>
+- (void)didExchangeCurrensies;
 - (void)didReceivedCurrenciesFromStorage:(NSArray<Currency *> *)currencies ;
 - (void)didUpdateCurrencies:(NSArray<Currency *> *)currency atIndexes:(NSArray<NSNumber *> *)indexes;
 @end
@@ -22,6 +23,7 @@
 
 - (instancetype)initWithDelegate:(id <StorageServiceDelegate>)delegate;
 - (void)getCurrencies;
+- (void)convertCurrency:(Currency *)currency amount:(float)amount to:(Currency *)toCurrency amount:(float)toAmount;
 
 @end
 

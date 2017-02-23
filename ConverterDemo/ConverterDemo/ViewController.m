@@ -51,6 +51,10 @@
   return UIStatusBarStyleLightContent;
 }
 
+- (IBAction)exchangeButtonPressed:(UIButton *)sender {
+  [self.rateListService getRateListForCurrency:self.dataManager.selectedTopCurrency andPerformExchange:YES];
+}
+
 // MARK: - RateListServiceDelegate
 
 - (void)didReceivedRateLists {
@@ -68,12 +72,27 @@
 }
 
 
+- (void)didReceivedRateListFor:(Currency *)currency andPerformExchange:(BOOL)performExchangeNeeded {
+  if (performExchangeNeeded == YES) {
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:currency.rateList.rates
+                                                         options:kNilOptions
+                                                           error:nil];
+    NSString *rateString = (NSString *)json[currency.currencyString];
+    float rate = rateString.floatValue;
+    
+    [self.storageService convertCurrency:currency amount:self.dataManager.valueForExchange to:self.dataManager.selectedBottomCurrency amount:self.dataManager.valueForExchange * rate];
+    self.dataManager.valueForExchange = 0;
+  }
+}
+
+
 // MARK: - StorageServiceDelegate
 
 - (void)didReceivedCurrenciesFromStorage:(NSArray<Currency *> *)currencies  {
   self.dataManager.currencies  = currencies;
   
-  [self.dataManager selectCurrencyAtIndex:self.bottomPageControl.currentPage];
+  [self.dataManager selectTopCurrencyAtIndex:self.topPageControl.currentPage];
+  [self.dataManager selectBottomCurrencyAtIndex:self.bottomPageControl.currentPage];
   
   [self.topCollectionView reloadData];
   [self.bottomCollectionView reloadData];
@@ -98,6 +117,10 @@
   }
 }
 
+- (void)didExchangeCurrensies {
+  
+}
+
 
 // MARK: - DataManagerDelegate
 
@@ -116,10 +139,11 @@
   if (scrollView == self.topCollectionView) {
     CGFloat pageWidth = self.topCollectionView.frame.size.width;
     self.topPageControl.currentPage = self.topCollectionView.contentOffset.x / pageWidth;
-    [self.dataManager selectCurrencyAtIndex:self.topPageControl.currentPage];
+    [self.dataManager selectTopCurrencyAtIndex:self.topPageControl.currentPage];
   } else {
     CGFloat pageWidth = self.bottomCollectionView.frame.size.width;
     self.bottomPageControl.currentPage = self.bottomCollectionView.contentOffset.x / pageWidth;
+    [self.dataManager selectBottomCurrencyAtIndex:self.topPageControl.currentPage];
   }
 }
 

@@ -24,11 +24,14 @@
 
 @property (weak, nonatomic) id <DataManagerDelegate> delegate;
 @property (strong, nonatomic) NSArray<Currency *> * currencies ;
-@property (strong, nonatomic) Currency *selectedCurrency;
+@property (strong, nonatomic) Currency *selectedTopCurrency;
+@property (strong, nonatomic) Currency *selectedBottomCurrency;
 @property float valueForExchange;
 
 - (instancetype)initWithDelegate:(id <DataManagerDelegate>)delegate;
-- (void)selectCurrencyAtIndex:(NSUInteger)index;
+
+- (void)selectTopCurrencyAtIndex:(NSUInteger)index;
+- (void)selectBottomCurrencyAtIndex:(NSUInteger)index;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;

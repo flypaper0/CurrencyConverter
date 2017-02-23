@@ -36,25 +36,33 @@
     }
 
     if (changes) {
-      if (([self.delegate respondsToSelector:@selector(didUpdateCurrencies:atIndexes:)])) {
+      if ([self.delegate respondsToSelector:@selector(didUpdateCurrencies:atIndexes:)]) {
         [self.delegate didUpdateCurrencies:(NSArray *)currencies  atIndexes:changes.modifications];
       }
     }
   }];
   
-  // Generate mock currency
+  // Generate mock currencies
   if (currencies .count == 0) {
     [self firstEnterConfiguration];
     currencies  = [Currency allObjects];
   }
   
-  if (([self.delegate respondsToSelector:@selector(didReceivedCurrenciesFromStorage:)])) {
+  if ([self.delegate respondsToSelector:@selector(didReceivedCurrenciesFromStorage:)]) {
     [self.delegate didReceivedCurrenciesFromStorage:(NSArray *)currencies ];
   }
 }
 
-- (void)convertCurrency:(NSString *)currencyString amount:(float)amount to:(NSString *)toCurrencyString amount:(float)toAmount {
+- (void)convertCurrency:(Currency *)currency amount:(float)amount to:(Currency *)toCurrency amount:(float)toAmount {
+  RLMRealm *realm = [RLMRealm defaultRealm];
+  [realm beginWriteTransaction];
+  currency.amount -= amount;
+  toCurrency.amount += toAmount;
+  [realm commitWriteTransaction];
   
+  if ([self.delegate respondsToSelector:@selector(didExchangeCurrensies)]) {
+    [self.delegate didExchangeCurrensies];
+  }
 }
 
 - (void)firstEnterConfiguration {

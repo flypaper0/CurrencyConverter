@@ -96,6 +96,9 @@
                                 <state key="normal" title="Exchange">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="exchangeButtonPressed:" destination="Dx5-e3-T4p" eventType="touchUpInside" id="OJk-EA-bV4"/>
+                                </connections>
                             </button>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>

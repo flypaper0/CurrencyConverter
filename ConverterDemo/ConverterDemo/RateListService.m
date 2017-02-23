@@ -14,6 +14,7 @@ static NSString * const FixerBaseURLString = @"http://api.fixer.io/";
 
 int attemptCounter = 0;
 int maxAttemptCounter = 3;
+dispatch_group_t group;
 
 - (instancetype)initWithDelegate:(id <RateListServiceDelegate>)delegate
 {
@@ -30,10 +31,10 @@ int maxAttemptCounter = 3;
 
 - (void)getRateListForCurrencies:(NSArray<Currency *> *)currencies {
   
+  group = dispatch_group_create();
   
-  dispatch_group_t group = dispatch_group_create();
   for (Currency *currency in currencies) {
-    [self getRateListForCurrency:currency inDispatchGroup:group];
+    [self getRateListForCurrency:currency andPerformExchange: NO];
   }
   
   dispatch_group_notify(group, dispatch_get_main_queue(), ^{
@@ -46,7 +47,7 @@ int maxAttemptCounter = 3;
   });
 }
 
-- (void)getRateListForCurrency:(Currency *)currency inDispatchGroup:(dispatch_group_t)group {
+- (void)getRateListForCurrency:(Currency *)currency andPerformExchange:(BOOL)performExchangeNeeded {
   dispatch_group_enter(group);
   
   NSDictionary *parameters = @{@"base": currency.currencyString};
@@ -60,6 +61,10 @@ int maxAttemptCounter = 3;
     currency.rateList = rateList;
     [realm commitWriteTransaction];
     
+    if (([self.delegate respondsToSelector:@selector(didReceivedRateListFor:andPerformExchange:)])) {
+      [self.delegate didReceivedRateListFor:currency andPerformExchange: performExchangeNeeded];
+    }
+    
     dispatch_group_leave(group);
     
   } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -71,7 +76,7 @@ int maxAttemptCounter = 3;
       }
     }
     
-    [weakSelf getRateListForCurrency:currency inDispatchGroup: group];
+    [weakSelf getRateListForCurrency:currency andPerformExchange: performExchangeNeeded];
   }];
 }
 

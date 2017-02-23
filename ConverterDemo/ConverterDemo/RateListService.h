@@ -13,6 +13,7 @@
 
 @protocol RateListServiceDelegate <NSObject>
 - (void)didReceivedRateLists;
+- (void)didReceivedRateListFor:(Currency *)currency andPerformExchange:(BOOL)performExchangeNeeded;
 - (void)didFailedWithError:(NSError *)error;
 @end
 
@@ -22,6 +23,7 @@
 - (instancetype)initWithDelegate:(id <RateListServiceDelegate>)delegate;
 
 - (void)getRateListForCurrencies:(NSArray<Currency *> *)currencies;
+- (void)getRateListForCurrency:(Currency *)currency andPerformExchange:(BOOL)performExchangeNeeded;
 
 @property (nonatomic, weak) id <RateListServiceDelegate> delegate;
 

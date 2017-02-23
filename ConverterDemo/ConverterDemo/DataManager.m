@@ -25,8 +25,12 @@ static NSUInteger bottomCollectionViewTag = 1002;
   return self;
 }
 
-- (void)selectCurrencyAtIndex:(NSUInteger)index {
-  self.selectedCurrency = self.currencies[index];
+- (void)selectTopCurrencyAtIndex:(NSUInteger)index {
+  self.selectedTopCurrency = self.currencies[index];
+}
+
+- (void)selectBottomCurrencyAtIndex:(NSUInteger)index {
+  self.selectedBottomCurrency = self.currencies[index];
 }
 
 // MARK: - CollectionView
@@ -51,14 +55,14 @@ static NSUInteger bottomCollectionViewTag = 1002;
     cell.balanceLabel.textColor = [UIColor whiteColor];
     cell.balanceLabel.alpha = 0.5;
     
-    if (self.selectedCurrency.rateList.rates) {
+    if (self.selectedTopCurrency.rateList.rates) {
       
-      if (self.selectedCurrency.currencyString == currency.currencyString) {
+      if (self.selectedTopCurrency.currencyString == currency.currencyString) {
         cell.valueTextField.text = @"-";
         return cell;
       }
       
-      NSDictionary* json = [NSJSONSerialization JSONObjectWithData:self.selectedCurrency.rateList.rates
+      NSDictionary* json = [NSJSONSerialization JSONObjectWithData:self.selectedTopCurrency.rateList.rates
                                                            options:kNilOptions
                                                              error:nil];
       NSString *rateString = (NSString *)json[currency.currencyString];
