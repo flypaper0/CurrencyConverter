@@ -13,8 +13,6 @@ static NSString * const FixerBaseURLString = @"http://api.fixer.io/";
 
 @implementation RateListService
 
-int attemptCounter = 0;
-int maxAttemptCounter = 3;
 dispatch_group_t group;
 
 - (instancetype)initWithDelegate:(id <RateListServiceDelegate>)delegate
@@ -23,6 +21,7 @@ dispatch_group_t group;
     if (self) {
         self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
         self.delegate = delegate;
+        self.requestSerializer.timeoutInterval = 10;
     }
     return self;
 }
@@ -39,9 +38,7 @@ dispatch_group_t group;
     }
     
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        
-        attemptCounter = 0;
-        
+                
         if (([self.delegate respondsToSelector:@selector(didReceivedRateLists)])) {
             [self.delegate didReceivedRateLists];
         }
@@ -79,14 +76,9 @@ dispatch_group_t group;
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         [NetworkActivityIndicatorManager networkOperationFinished];
         
-        attemptCounter++;
-        if (attemptCounter == maxAttemptCounter) {
-            if (([self.delegate respondsToSelector:@selector(didFailedWithError:)])) {
-                [self.delegate didFailedWithError:error];
-            }
+        if (([self.delegate respondsToSelector:@selector(didFailedWithError:)])) {
+            [self.delegate didFailedWithError:error];
         }
-        
-        [weakSelf getRateListForCurrency:currency andPerformExchange: performExchangeNeeded];
     }];
 }
 
