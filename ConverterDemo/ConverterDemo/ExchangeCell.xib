@@ -38,7 +38,7 @@
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="40"/>
-                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="ASCIICapableNumberPad"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
                         <connections>
                             <action selector="valueDidChanged:" destination="pen-Gx-gX1" eventType="editingChanged" id="DlR-cd-8PS"/>
                             <outlet property="delegate" destination="pen-Gx-gX1" id="Al8-aP-IVG"/>

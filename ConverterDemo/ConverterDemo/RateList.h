@@ -16,6 +16,7 @@
 @property NSData *rates;
 
 - (instancetype)initWithAttributes:(NSDictionary *)attributes;
+- (BOOL)isEqual:(RateList *)rateList;
 
 @end
 

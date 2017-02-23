@@ -18,16 +18,18 @@
     [super awakeFromNib];
 }
 
+- (void)prepareForReuse {
+    self.valueTextField.text = @"";
+}
+
 
 // MARK: - UITextFieldDelegate
 - (IBAction)valueDidChanged:(UITextField *)sender {
+    NSString *value = [[sender.text stringByReplacingOccurrencesOfString:@"-" withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""];
     if (([self.delegate respondsToSelector:@selector(textFieldValueDidChangedTo:inCellWithIndex:)])) {
-        [self.delegate textFieldValueDidChangedTo: sender.text.floatValue inCellWithIndex: self.tag];
+        [self.delegate textFieldValueDidChangedTo: value.floatValue inCellWithIndex: self.tag];
     }
-}
-
-- (void)prepareForReuse {
-    self.valueTextField.text = @"";
+    sender.text = [NSString stringWithFormat:@"- %@", value];
 }
 
 @end

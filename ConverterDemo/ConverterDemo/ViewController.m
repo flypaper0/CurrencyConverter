@@ -50,6 +50,11 @@
     [self.storageService getCurrencies];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self becomeFirstResponderInCollectionView:self.topCollectionView forCellAtIndex:0];
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
@@ -67,6 +72,7 @@
 - (IBAction)exchangeButtonPressed:(UIButton *)sender {
     [self.rateListService getRateListForCurrency:self.dataManager.selectedTopCurrency andPerformExchange:YES];
 }
+
 
 // MARK: - RateListServiceDelegate
 
@@ -105,7 +111,19 @@
     [self.bottomCollectionView reloadData];
     
     [self.rateListService getRateListForCurrencies: currencies];
+    [NSTimer scheduledTimerWithTimeInterval:30
+                                     target:self
+                                   selector:@selector(updateTimer:)
+                                   userInfo:currencies
+                                    repeats:YES];
 }
+
+- (void)updateTimer:(NSTimer *)timer {
+    NSArray<Currency *> * currencies = timer.userInfo;
+    [self.rateListService getRateListForCurrencies: currencies];
+}
+
+
 
 - (void)didUpdateCurrencies:(NSArray<Currency *> *)currencies atIndexes:(NSArray<NSNumber *> *)indexes {
     self.dataManager.currencies = currencies;
@@ -114,11 +132,13 @@
     for (NSNumber *index in indexes) {
         [indexPaths addObject:[NSIndexPath indexPathForItem: index.integerValue inSection:0]];
     }
+    [self.topCollectionView performBatchUpdates:^{
+        [self.topCollectionView reloadItemsAtIndexPaths:indexPaths];
+    } completion:^(BOOL finished) {}];
     
-    [UIView setAnimationsEnabled:NO];
-    [self.topCollectionView reloadItemsAtIndexPaths:indexPaths];
-    [self.bottomCollectionView reloadItemsAtIndexPaths:indexPaths];
-    [UIView setAnimationsEnabled:YES];
+    [self.bottomCollectionView performBatchUpdates:^{
+        [self.bottomCollectionView reloadItemsAtIndexPaths:indexPaths];
+    } completion:^(BOOL finished) {}];
 }
 
 - (void)didExchangeCurrensies {
@@ -145,8 +165,12 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == self.topCollectionView) {
         CGFloat pageWidth = self.topCollectionView.frame.size.width;
+        
         self.topPageControl.currentPage = self.topCollectionView.contentOffset.x / pageWidth;
         [self.dataManager selectTopCurrencyAtIndex:self.topPageControl.currentPage];
+        
+        [self becomeFirstResponderInCollectionView:self.topCollectionView forCellAtIndex:self.topPageControl.currentPage];
+        
     } else {
         CGFloat pageWidth = self.bottomCollectionView.frame.size.width;
         self.bottomPageControl.currentPage = self.bottomCollectionView.contentOffset.x / pageWidth;
@@ -155,6 +179,11 @@
     
     self.exchangeButton.enabled = !self.dataManager.isCurrenciesEqual;
     
+}
+
+- (void)becomeFirstResponderInCollectionView:(UICollectionView *)collectionView forCellAtIndex: (NSUInteger)index {
+    ExchangeCell *cell = (ExchangeCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+    [cell.valueTextField becomeFirstResponder];
 }
 
 @end

@@ -20,6 +20,7 @@
 		144DFAB61E5CEF620050F641 /* Currency.m in Sources */ = {isa = PBXBuildFile; fileRef = 144DFAB51E5CEF620050F641 /* Currency.m */; };
 		144DFABB1E5CF0220050F641 /* StorageService.m in Sources */ = {isa = PBXBuildFile; fileRef = 144DFABA1E5CF0220050F641 /* StorageService.m */; };
 		144DFAC21E5D0B5A0050F641 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 144DFAC11E5D0B5A0050F641 /* DataManager.m */; };
+		1486C4521E5F8AE90093BDBF /* NetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1486C4511E5F8AE90093BDBF /* NetworkActivityIndicatorManager.m */; };
 		510C9A941E1E9ACC90474E9F /* libPods-ConverterDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328491821054EDBFA754D840 /* libPods-ConverterDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,8 @@
 		144DFABE1E5CF4840050F641 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
 		144DFAC01E5D0B5A0050F641 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		144DFAC11E5D0B5A0050F641 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		1486C4501E5F8AE90093BDBF /* NetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
+		1486C4511E5F8AE90093BDBF /* NetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
 		328491821054EDBFA754D840 /* libPods-ConverterDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ConverterDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C83EC3300652F461AFD1599 /* Pods-ConverterDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConverterDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConverterDemo/Pods-ConverterDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,6 +163,8 @@
 			children = (
 				144DFAA81E5C8DC70050F641 /* RateListService.h */,
 				144DFAA91E5C8DC70050F641 /* RateListService.m */,
+				1486C4501E5F8AE90093BDBF /* NetworkActivityIndicatorManager.h */,
+				1486C4511E5F8AE90093BDBF /* NetworkActivityIndicatorManager.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				144DFAA61E5C5B1D0050F641 /* RateList.m in Sources */,
+				1486C4521E5F8AE90093BDBF /* NetworkActivityIndicatorManager.m in Sources */,
 				144DFABB1E5CF0220050F641 /* StorageService.m in Sources */,
 				144DFA971E5B71810050F641 /* ExchangeCell.m in Sources */,
 				144DFA851E5B71680050F641 /* ViewController.m in Sources */,
@@ -475,9 +481,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PrefixHeader.pch";
 				INFOPLIST_FILE = ConverterDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AG.ConverterDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -490,9 +498,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PrefixHeader.pch";
 				INFOPLIST_FILE = ConverterDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AG.ConverterDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

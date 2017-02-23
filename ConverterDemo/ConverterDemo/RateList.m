@@ -25,5 +25,14 @@
     return self;
 }
 
+
+
+- (BOOL)isEqual:(RateList *)rateList {
+    if (self.base == rateList.base && [self.rates isEqualToData:rateList.rates]) {
+        return YES;
+    }
+    return NO;
+}
+
 @end
 

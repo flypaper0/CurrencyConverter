@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "StorageService.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    [StorageService firstEnterConfigurationIfNeeded];
     return YES;
 }
 

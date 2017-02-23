@@ -42,11 +42,6 @@
         }
     }];
     
-    // Generate mock currencies
-    if (currencies .count == 0) {
-        [self firstEnterConfiguration];
-        currencies  = [Currency allObjects];
-    }
     
     if ([self.delegate respondsToSelector:@selector(didReceivedCurrenciesFromStorage:)]) {
         [self.delegate didReceivedCurrenciesFromStorage:(NSArray *)currencies ];
@@ -56,7 +51,15 @@
 - (void)convertCurrency:(Currency *)currency amount:(float)amount to:(Currency *)toCurrency amount:(float)toAmount {
     
     if ((currency.amount - amount) < 0) {
-        NSError *error = [NSError errorWithDomain:@"Exchange failed" code:200 userInfo: @{NSLocalizedDescriptionKey : @"Not enough money" }];
+        NSError *error = [NSError errorWithDomain:@"Error" code:200 userInfo: @{NSLocalizedDescriptionKey : @"Not enough money" }];
+        if ([self.delegate respondsToSelector:@selector(didFailedExchangeWithError:)]) {
+            [self.delegate didFailedExchangeWithError: error];
+        }
+        return;
+    }
+    
+    if (amount == 0) {
+        NSError *error = [NSError errorWithDomain:@"Error" code:200 userInfo: @{NSLocalizedDescriptionKey : @"You can not exchange 0" }];
         if ([self.delegate respondsToSelector:@selector(didFailedExchangeWithError:)]) {
             [self.delegate didFailedExchangeWithError: error];
         }
@@ -74,17 +77,23 @@
     }
 }
 
-- (void)firstEnterConfiguration {
++ (void)firstEnterConfigurationIfNeeded {
     
-    RLMRealm *realm = [RLMRealm defaultRealm];
+    RLMResults<Currency *> *currencies  = [Currency allObjects];
     
-    Currency *eurCurrency = [[Currency alloc] initWithIndex:0 currencyString:@"EUR" andAmount:100];
-    Currency *usdCurrency = [[Currency alloc] initWithIndex:1 currencyString:@"USD" andAmount:100];
-    Currency *gbpCurrency = [[Currency alloc] initWithIndex:2 currencyString:@"GBP" andAmount:100];
+    if (currencies .count == 0) {
     
-    [realm transactionWithBlock:^{
-        [realm addObjects:@[eurCurrency, usdCurrency, gbpCurrency]];
-    }];
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        
+        Currency *eurCurrency = [[Currency alloc] initWithIndex:0 currencyString:@"EUR" andAmount:100];
+        Currency *usdCurrency = [[Currency alloc] initWithIndex:1 currencyString:@"USD" andAmount:100];
+        Currency *gbpCurrency = [[Currency alloc] initWithIndex:2 currencyString:@"GBP" andAmount:100];
+        
+        [realm transactionWithBlock:^{
+            [realm addObjects:@[eurCurrency, usdCurrency, gbpCurrency]];
+        }];
+        
+    }
 }
 
 - (void)dealloc {

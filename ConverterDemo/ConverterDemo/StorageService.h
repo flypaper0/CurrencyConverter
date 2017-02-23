@@ -25,6 +25,7 @@
 - (instancetype)initWithDelegate:(id <StorageServiceDelegate>)delegate;
 - (void)getCurrencies;
 - (void)convertCurrency:(Currency *)currency amount:(float)amount to:(Currency *)toCurrency amount:(float)toAmount;
++ (void)firstEnterConfigurationIfNeeded;
 
 @end
 

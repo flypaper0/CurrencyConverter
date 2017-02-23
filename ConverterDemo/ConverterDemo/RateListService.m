@@ -7,6 +7,7 @@
 //
 
 #import "RateListService.h"
+#import "NetworkActivityIndicatorManager.h"
 
 static NSString * const FixerBaseURLString = @"http://api.fixer.io/";
 
@@ -48,6 +49,9 @@ dispatch_group_t group;
 }
 
 - (void)getRateListForCurrency:(Currency *)currency andPerformExchange:(BOOL)performExchangeNeeded {
+    
+    [NetworkActivityIndicatorManager networkOperationStarted];
+    
     dispatch_group_enter(group);
     
     NSDictionary *parameters = @{@"base": currency.currencyString};
@@ -55,11 +59,16 @@ dispatch_group_t group;
     __weak typeof(self) weakSelf = self;
     [self GET:@"latest" parameters:parameters progress:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
-        RLMRealm *realm = [RLMRealm defaultRealm];
-        [realm beginWriteTransaction];
+        [NetworkActivityIndicatorManager networkOperationFinished];
+        
         RateList *rateList = [[RateList alloc] initWithAttributes:JSON];
-        currency.rateList = rateList;
-        [realm commitWriteTransaction];
+        
+        if (![rateList isEqual:currency.rateList]) {
+            RLMRealm *realm = [RLMRealm defaultRealm];
+            [realm beginWriteTransaction];
+            currency.rateList = rateList;
+            [realm commitWriteTransaction];
+        }
         
         if (([self.delegate respondsToSelector:@selector(didReceivedRateListFor:andPerformExchange:)])) {
             [self.delegate didReceivedRateListFor:currency andPerformExchange: performExchangeNeeded];
@@ -68,6 +77,7 @@ dispatch_group_t group;
         dispatch_group_leave(group);
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        [NetworkActivityIndicatorManager networkOperationFinished];
         
         attemptCounter++;
         if (attemptCounter == maxAttemptCounter) {
