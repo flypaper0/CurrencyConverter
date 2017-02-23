@@ -63,7 +63,7 @@ static NSUInteger bottomCollectionViewTag = 1002;
                                                              error:nil];
       NSString *rateString = (NSString *)json[currency.currencyString];
       float rate = rateString.floatValue;
-      cell.valueTextField.text = [NSString stringWithFormat:@"%.2f", self.valueForExchange / rate];
+      cell.valueTextField.text = [NSString stringWithFormat:@"%.2f", self.valueForExchange * rate];
     }
   }
   
@@ -75,31 +75,10 @@ static NSUInteger bottomCollectionViewTag = 1002;
 
 - (void)textFieldValueDidChangedTo:(float)value inCellWithIndex:(NSUInteger)index {
   
-  if (!self.selectedCurrency.rateList.rates) {
-    return;
-  }
-  
-  Currency *currency = self.currencies[index];
-  
-  if (self.selectedCurrency.currencyString == currency.currencyString) {
-    if ([self.delegate respondsToSelector:@selector(changeBottomTextFieldTextTo:inCellWithIndex:)]) {
-      [self.delegate changeBottomTextFieldTextTo:@"-" inCellWithIndex:index];
-    }
-    return;
-  }
-  
   self.valueForExchange = value;
   
-  NSDictionary* json = [NSJSONSerialization JSONObjectWithData:self.selectedCurrency.rateList.rates
-                                                       options:kNilOptions
-                                                         error:nil];
-  NSString *rateString = (NSString *)json[currency.currencyString];
-  
-  float rate = rateString.floatValue;
-  NSString *result = [NSString stringWithFormat:@"%.2f", self.valueForExchange / rate];
-  
-  if ([self.delegate respondsToSelector:@selector(changeBottomTextFieldTextTo:inCellWithIndex:)]) {
-    [self.delegate changeBottomTextFieldTextTo:result inCellWithIndex:index];
+  if ([self.delegate respondsToSelector:@selector(reloadBottomCollectionView)]) {
+    [self.delegate reloadBottomCollectionView];
   }
   
 }

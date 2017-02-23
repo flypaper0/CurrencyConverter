@@ -15,7 +15,7 @@
 
 @protocol DataManagerDelegate <NSObject>
 
-- (void)changeBottomTextFieldTextTo:(NSString *)value inCellWithIndex:(NSUInteger)index;
+- (void)reloadBottomCollectionView;
 
 @end
 

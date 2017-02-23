@@ -61,6 +61,9 @@
   UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error"
                                                                            message:error.localizedDescription
                                                                     preferredStyle:UIAlertControllerStyleAlert];
+  UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+  [alertController addAction:ok];
+  
   [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -96,11 +99,10 @@
 }
 
 
-// MARk: - DataManagerDelegate
+// MARK: - DataManagerDelegate
 
-- (void)changeBottomTextFieldTextTo:(NSString *)value inCellWithIndex:(NSUInteger)index {
-  ExchangeCell *cell = (ExchangeCell *)[self.bottomCollectionView cellForItemAtIndexPath:[self.bottomCollectionView indexPathsForVisibleItems].firstObject];
-  cell.valueTextField.text = [NSString stringWithFormat:@"%@", value];
+- (void)reloadBottomCollectionView {
+  [self.bottomCollectionView reloadData];
 }
 
 
@@ -114,10 +116,10 @@
   if (scrollView == self.topCollectionView) {
     CGFloat pageWidth = self.topCollectionView.frame.size.width;
     self.topPageControl.currentPage = self.topCollectionView.contentOffset.x / pageWidth;
+    [self.dataManager selectCurrencyAtIndex:self.topPageControl.currentPage];
   } else {
     CGFloat pageWidth = self.bottomCollectionView.frame.size.width;
     self.bottomPageControl.currentPage = self.bottomCollectionView.contentOffset.x / pageWidth;
-    [self.dataManager selectCurrencyAtIndex:self.bottomPageControl.currentPage];
   }
 }
 
