@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="sCr-pt-eWM">
             <objects>
-                <viewController id="Dx5-e3-T4p" customClass="ViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Dx5-e3-T4p" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fRK-Oc-4Ws"/>
                         <viewControllerLayoutGuide type="bottom" id="7SG-IV-Ovl"/>
@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="l5B-Es-TpK">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1001" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="l5B-Es-TpK">
                                 <rect key="frame" x="0.0" y="64" width="375" height="135"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -41,7 +41,7 @@
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="e6z-G1-E4g">
                                 <rect key="frame" x="168" y="162" width="39" height="37"/>
                             </pageControl>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fbx-fO-7tK">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1002" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fbx-fO-7tK">
                                 <rect key="frame" x="0.0" y="199" width="375" height="135"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -62,7 +62,7 @@
                                 <rect key="frame" x="168" y="314" width="39" height="37"/>
                             </pageControl>
                         </subviews>
-                        <color key="backgroundColor" red="0.062745098040000002" green="0.3803921569" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.068161449932273979" green="0.42474869690624012" blue="0.94278139142820505" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="l5B-Es-TpK" firstAttribute="leading" secondItem="DTU-tP-Cs6" secondAttribute="leading" id="7dD-ar-zQQ"/>
                             <constraint firstItem="caY-T1-Krm" firstAttribute="centerX" secondItem="DTU-tP-Cs6" secondAttribute="centerX" id="87v-dU-qIv"/>
@@ -76,7 +76,30 @@
                             <constraint firstItem="Fbx-fO-7tK" firstAttribute="top" secondItem="e6z-G1-E4g" secondAttribute="bottom" id="yWK-za-my7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Mgx-fe-X3w"/>
+                    <navigationItem key="navigationItem" id="Mgx-fe-X3w">
+                        <barButtonItem key="leftBarButtonItem" title="Oтменить" style="plain" id="OUx-ik-dnS">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BTc-ru-Hjs">
+                                <rect key="frame" x="16" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <state key="normal" title="Отменить">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Exchange" style="plain" id="L5O-3v-Fys">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Khb-s1-8bI">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <state key="normal" title="Exchange">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="bottomCollectionView" destination="Fbx-fO-7tK" id="12X-1F-Gwd"/>
                         <outlet property="bottomPageControl" destination="caY-T1-Krm" id="Tf0-Lo-XfA"/>

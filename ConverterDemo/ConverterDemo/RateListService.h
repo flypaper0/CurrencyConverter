@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 #import "RateList.h"
-
+#import "Currency.h"
 
 @protocol RateListServiceDelegate <NSObject>
-- (void)didReceivedRateList:(RateList*)rateList;
+- (void)didReceivedRateLists;
 - (void)didFailedWithError:(NSError *)error;
 @end
 
@@ -21,7 +21,7 @@
 
 - (instancetype)initWithDelegate:(id <RateListServiceDelegate>)delegate;
 
-- (void)getRateListForCurrency:(Currency)currency;
+- (void)getRateListForCurrencies:(NSArray<Currency *> *)currencies;
 
 @property (nonatomic, weak) id <RateListServiceDelegate> delegate;
 

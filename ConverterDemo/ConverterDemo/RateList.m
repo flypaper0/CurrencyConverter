@@ -19,9 +19,11 @@
   }
   
   self.base = [attributes valueForKeyPath:@"base"];
-  self.rates = [attributes valueForKeyPath:@"rates"];
+  self.rates = [NSJSONSerialization dataWithJSONObject:[attributes valueForKeyPath:@"rates"]
+                                               options:NSJSONWritingPrettyPrinted error:nil];
   
   return self;
 }
 
 @end
+

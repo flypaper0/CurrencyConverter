@@ -25,61 +25,48 @@
   return self;
 }
 
-- (void)getBalances {
+- (void)getCurrencies {
   
-  __weak RLMResults<Balance *> *balances = [[Balance allObjects] sortedResultsUsingKeyPath:@"index" ascending:YES];
+  __weak RLMResults<Currency *> *currencies  = [[Currency allObjects] sortedResultsUsingKeyPath:@"index" ascending:YES];
   
-  self.notificationToken = [balances addNotificationBlock:^(RLMResults<Balance *> *results, RLMCollectionChange *changes, NSError *error) {
+  self.notificationToken = [currencies  addNotificationBlock:^(RLMResults<Currency *> *results, RLMCollectionChange *changes, NSError *error) {
     if (error) {
       NSLog(@"Failed to open Realm on background worker: %@", error);
       return;
     }
 
     if (changes) {
-      if (([self.delegate respondsToSelector:@selector(didUpdateBalances:atIndexes:)])) {
-        [self.delegate didUpdateBalances:(NSArray *)balances atIndexes:changes.modifications];
+      if (([self.delegate respondsToSelector:@selector(didUpdateCurrencies:atIndexes:)])) {
+        [self.delegate didUpdateCurrencies:(NSArray *)currencies  atIndexes:changes.modifications];
       }
     }
   }];
   
-  // Generate mock balance
-  if (balances.count == 0) {
+  // Generate mock currency
+  if (currencies .count == 0) {
     [self firstEnterConfiguration];
-    balances = [Balance allObjects];
+    currencies  = [Currency allObjects];
   }
   
-  if (([self.delegate respondsToSelector:@selector(didReceivedBalancesFromStorage:)])) {
-    [self.delegate didReceivedBalancesFromStorage:(NSArray *)balances];
+  if (([self.delegate respondsToSelector:@selector(didReceivedCurrenciesFromStorage:)])) {
+    [self.delegate didReceivedCurrenciesFromStorage:(NSArray *)currencies ];
   }
 }
 
+- (void)convertCurrency:(NSString *)currencyString amount:(float)amount to:(NSString *)toCurrencyString amount:(float)toAmount {
+  
+}
 
 - (void)firstEnterConfiguration {
 
   RLMRealm *realm = [RLMRealm defaultRealm];
   
-  Balance *eurBalance = [[Balance alloc] init];
-  eurBalance.index = 0;
-  eurBalance.balance = 100;
-  eurBalance.currency = @"EUR";
-  [realm transactionWithBlock:^{
-    [realm addObject:eurBalance];
-  }];
-
-  Balance *usdBalance = [[Balance alloc] init];
-  usdBalance.index = 1;
-  usdBalance.balance = 100;
-  usdBalance.currency = @"USD";
-  [realm transactionWithBlock:^{
-    [realm addObject:usdBalance];
-  }];
+  Currency *eurCurrency = [[Currency alloc] initWithIndex:0 currencyString:@"EUR" andAmount:100];
+  Currency *usdCurrency = [[Currency alloc] initWithIndex:1 currencyString:@"USD" andAmount:100];
+  Currency *gbpCurrency = [[Currency alloc] initWithIndex:2 currencyString:@"GBP" andAmount:100];
   
-  Balance *gbpBalance = [[Balance alloc] init];
-  gbpBalance.index = 2;
-  gbpBalance.balance = 100;
-  gbpBalance.currency = @"GBP";
   [realm transactionWithBlock:^{
-    [realm addObject:gbpBalance];
+    [realm addObjects:@[eurCurrency, usdCurrency, gbpCurrency]];
   }];
 }
 

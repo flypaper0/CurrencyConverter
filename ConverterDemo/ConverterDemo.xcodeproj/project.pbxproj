@@ -17,7 +17,7 @@
 		144DFA981E5B71810050F641 /* ExchangeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 144DFA961E5B71810050F641 /* ExchangeCell.xib */; };
 		144DFAA61E5C5B1D0050F641 /* RateList.m in Sources */ = {isa = PBXBuildFile; fileRef = 144DFAA51E5C5B1D0050F641 /* RateList.m */; };
 		144DFAAA1E5C8DC70050F641 /* RateListService.m in Sources */ = {isa = PBXBuildFile; fileRef = 144DFAA91E5C8DC70050F641 /* RateListService.m */; };
-		144DFAB61E5CEF620050F641 /* Balance.m in Sources */ = {isa = PBXBuildFile; fileRef = 144DFAB51E5CEF620050F641 /* Balance.m */; };
+		144DFAB61E5CEF620050F641 /* Currency.m in Sources */ = {isa = PBXBuildFile; fileRef = 144DFAB51E5CEF620050F641 /* Currency.m */; };
 		144DFABB1E5CF0220050F641 /* StorageService.m in Sources */ = {isa = PBXBuildFile; fileRef = 144DFABA1E5CF0220050F641 /* StorageService.m */; };
 		144DFAC21E5D0B5A0050F641 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 144DFAC11E5D0B5A0050F641 /* DataManager.m */; };
 		510C9A941E1E9ACC90474E9F /* libPods-ConverterDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328491821054EDBFA754D840 /* libPods-ConverterDemo.a */; };
@@ -42,8 +42,8 @@
 		144DFAA51E5C5B1D0050F641 /* RateList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RateList.m; sourceTree = "<group>"; };
 		144DFAA81E5C8DC70050F641 /* RateListService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RateListService.h; sourceTree = "<group>"; };
 		144DFAA91E5C8DC70050F641 /* RateListService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RateListService.m; sourceTree = "<group>"; };
-		144DFAB41E5CEF620050F641 /* Balance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Balance.h; sourceTree = "<group>"; };
-		144DFAB51E5CEF620050F641 /* Balance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Balance.m; sourceTree = "<group>"; };
+		144DFAB41E5CEF620050F641 /* Currency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Currency.h; sourceTree = "<group>"; };
+		144DFAB51E5CEF620050F641 /* Currency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Currency.m; sourceTree = "<group>"; };
 		144DFAB91E5CF0220050F641 /* StorageService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		144DFABA1E5CF0220050F641 /* StorageService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageService.m; sourceTree = "<group>"; };
 		144DFABE1E5CF4840050F641 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
@@ -131,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				144DFAB01E5CEEFE0050F641 /* Realm */,
-				144DFAAF1E5CEEEF0050F641 /* Plane */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -145,20 +144,13 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
-		144DFAAF1E5CEEEF0050F641 /* Plane */ = {
+		144DFAB01E5CEEFE0050F641 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
 				144DFAA41E5C5B1D0050F641 /* RateList.h */,
 				144DFAA51E5C5B1D0050F641 /* RateList.m */,
-			);
-			name = Plane;
-			sourceTree = "<group>";
-		};
-		144DFAB01E5CEEFE0050F641 /* Realm */ = {
-			isa = PBXGroup;
-			children = (
-				144DFAB41E5CEF620050F641 /* Balance.h */,
-				144DFAB51E5CEF620050F641 /* Balance.m */,
+				144DFAB41E5CEF620050F641 /* Currency.h */,
+				144DFAB51E5CEF620050F641 /* Currency.m */,
 			);
 			name = Realm;
 			sourceTree = "<group>";
@@ -354,7 +346,7 @@
 				144DFABB1E5CF0220050F641 /* StorageService.m in Sources */,
 				144DFA971E5B71810050F641 /* ExchangeCell.m in Sources */,
 				144DFA851E5B71680050F641 /* ViewController.m in Sources */,
-				144DFAB61E5CEF620050F641 /* Balance.m in Sources */,
+				144DFAB61E5CEF620050F641 /* Currency.m in Sources */,
 				144DFA821E5B71680050F641 /* AppDelegate.m in Sources */,
 				144DFA7F1E5B71680050F641 /* main.m in Sources */,
 				144DFAC21E5D0B5A0050F641 /* DataManager.m in Sources */,

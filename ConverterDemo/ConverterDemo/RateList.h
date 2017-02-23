@@ -6,14 +6,16 @@
 //  Copyright © 2017 Artur Guseinov. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Realm/Realm.h>
 
+@class RateList;
 
-@interface RateList : NSObject
+@interface RateList : RLMObject
 
-@property (strong, nonatomic) NSString *base;
-@property (strong, nonatomic) NSDictionary *rates;
+@property NSString *base;
+@property NSData *rates;
 
 - (instancetype)initWithAttributes:(NSDictionary *)attributes;
 
 @end
+

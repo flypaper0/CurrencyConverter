@@ -8,13 +8,14 @@
 
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
-
-#define DefaultCurrencies [@"EUR",@"USD",@"GBP"]
-
-
-typedef enum NSUInteger {EUR, USD, GBP} Currency;
-#define currencyString(enum) [@DefaultCurrencies objectAtIndex:enum]
-
+//
+//#define DefaultCurrencyStrings @[@"EUR",@"USD",@"GBP"]
+//#define CurrencySymbols @[@"€",@"$",@"£"]
+//
+//typedef enum NSUInteger {EUR, USD, GBP} Currency;
+//#define currencyString(enum) [DefaultCurrencyStrings objectAtIndex:enum]
+//#define currencySymbol(enum) [CurrencySymbols objectAtIndex:enum]
+//
 
 
 #endif /* PrefixHeader_pch */

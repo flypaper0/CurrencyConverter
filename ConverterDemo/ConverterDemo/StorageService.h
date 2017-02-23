@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Balance.h"
+#import "Currency.h"
 
 
 @protocol StorageServiceDelegate <NSObject>
-- (void)didReceivedBalancesFromStorage:(NSArray<Balance *> *)balances;
-- (void)didUpdateBalances:(NSArray<Balance *> *)balance atIndexes:(NSArray<NSNumber *> *)indexes;
+- (void)didReceivedCurrenciesFromStorage:(NSArray<Currency *> *)currencies ;
+- (void)didUpdateCurrencies:(NSArray<Currency *> *)currency atIndexes:(NSArray<NSNumber *> *)indexes;
 @end
 
 
@@ -21,7 +21,7 @@
 @property (nonatomic, weak) id <StorageServiceDelegate> delegate;
 
 - (instancetype)initWithDelegate:(id <StorageServiceDelegate>)delegate;
-- (void)getBalances;
+- (void)getCurrencies;
 
 @end
 

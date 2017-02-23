@@ -10,11 +10,6 @@
 
 @interface ExchangeCell () <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *currencyLabel;
-@property (weak, nonatomic) IBOutlet UITextField *valueTextField;
-@property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
-
-
 @end
 
 @implementation ExchangeCell
@@ -26,5 +21,10 @@
 
 
 // MARK: - UITextFieldDelegate
+- (IBAction)valueDidChanged:(UITextField *)sender {
+  if (([self.delegate respondsToSelector:@selector(textFieldValueDidChangedTo:inCellWithIndex:)])) {
+    [self.delegate textFieldValueDidChangedTo: sender.text.floatValue inCellWithIndex: self.tag];
+  }
+}
 
 @end

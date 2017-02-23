@@ -12,6 +12,9 @@ static NSString * const FixerBaseURLString = @"http://api.fixer.io/";
 
 @implementation RateListService
 
+int attemptCounter = 0;
+int maxAttemptCounter = 3;
+
 - (instancetype)initWithDelegate:(id <RateListServiceDelegate>)delegate
 {
   self = [super initWithBaseURL:[NSURL URLWithString:FixerBaseURLString]];
@@ -25,21 +28,50 @@ static NSString * const FixerBaseURLString = @"http://api.fixer.io/";
 
 #pragma mark -
 
-- (void)getRateListForCurrency:(Currency)currency {
+- (void)getRateListForCurrencies:(NSArray<Currency *> *)currencies {
   
-  NSDictionary *parameters = @{@"base": currencyString(currency)};
   
+  dispatch_group_t group = dispatch_group_create();
+  for (Currency *currency in currencies) {
+    [self getRateListForCurrency:currency inDispatchGroup:group];
+  }
+  
+  dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+    
+    attemptCounter = 0;
+    
+    if (([self.delegate respondsToSelector:@selector(didReceivedRateLists)])) {
+      [self.delegate didReceivedRateLists];
+    }
+  });
+}
+
+- (void)getRateListForCurrency:(Currency *)currency inDispatchGroup:(dispatch_group_t)group {
+  dispatch_group_enter(group);
+  
+  NSDictionary *parameters = @{@"base": currency.currencyString};
+  
+  __weak typeof(self) weakSelf = self;
   [self GET:@"latest" parameters:parameters progress:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
     
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
     RateList *rateList = [[RateList alloc] initWithAttributes:JSON];
+    currency.rateList = rateList;
+    [realm commitWriteTransaction];
     
-    if (([self.delegate respondsToSelector:@selector(didReceivedRateList:)])) {
-      [self.delegate didReceivedRateList:rateList];
-    }
+    dispatch_group_leave(group);
+    
   } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
-    if (([self.delegate respondsToSelector:@selector(didFailedWithError:)])) {
-      [self.delegate didFailedWithError:error];
+   
+    attemptCounter++;
+    if (attemptCounter == maxAttemptCounter) {
+      if (([self.delegate respondsToSelector:@selector(didFailedWithError:)])) {
+        [self.delegate didFailedWithError:error];
+      }
     }
+    
+    [weakSelf getRateListForCurrency:currency inDispatchGroup: group];
   }];
 }
 

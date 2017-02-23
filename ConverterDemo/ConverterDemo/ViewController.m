@@ -10,7 +10,7 @@
 #import "ExchangeCell.h"
 #import "DataManager.h"
 
-@interface ViewController () <DataManagerDelegate, UICollectionViewDelegate>
+@interface ViewController () <DataManagerDelegate, RateListServiceDelegate, StorageServiceDelegate, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *topCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *bottomCollectionView;
@@ -33,26 +33,74 @@
   [self.topCollectionView registerNib:nib forCellWithReuseIdentifier:@"ExchangeCell"];
   [self.bottomCollectionView registerNib:nib forCellWithReuseIdentifier:@"ExchangeCell"];
   
-  self.dataManager = [[DataManager alloc] initWithDelegate:self];
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+  self.navigationController.navigationBar.shadowImage = [UIImage new];
+  self.navigationController.navigationBar.translucent = YES;
+    
+  self.dataManager = [[DataManager alloc] initWithDelegate: self];
   self.topCollectionView.dataSource = self.dataManager;
   self.bottomCollectionView.dataSource = self.dataManager;
 
-  self.rateListService = [[RateListService alloc] initWithDelegate:self.dataManager];
-  [self.rateListService getRateListForCurrency: USD];
+  self.rateListService = [[RateListService alloc] initWithDelegate:self];
   
-  self.storageService = [[StorageService alloc] initWithDelegate:self.dataManager];
-  [self.storageService getBalances];
+  self.storageService = [[StorageService alloc] initWithDelegate:self];
+  [self.storageService getCurrencies];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
+// MARK: - RateListServiceDelegate
+
+- (void)didReceivedRateLists {
+  NSLog(@"All rate lists received");
+}
+
+- (void)didFailedWithError:(NSError *)error {
+  UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                           message:error.localizedDescription
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+  [self presentViewController:alertController animated:YES completion:nil];
 }
 
 
-// MARK: - DataManagerDelegate
+// MARK: - StorageServiceDelegate
 
-- (void)reloadTopCollectionView {
+- (void)didReceivedCurrenciesFromStorage:(NSArray<Currency *> *)currencies  {
+  self.dataManager.currencies  = currencies;
+  
+  [self.dataManager selectCurrencyAtIndex:self.bottomPageControl.currentPage];
+  
   [self.topCollectionView reloadData];
+  [self.bottomCollectionView reloadData];
+  
+  [self.rateListService getRateListForCurrencies: currencies];
 }
 
-- (void)reloadBottomCollectionView {
-  [self.bottomCollectionView reloadData];
+- (void)didUpdateCurrencies:(NSArray<Currency *> *)currencies atIndexes:(NSArray<NSNumber *> *)indexes {
+  self.dataManager.currencies = currencies;
+  
+  NSMutableArray *indexPaths = [[NSMutableArray alloc] initWithCapacity:indexes.count];
+  for (NSNumber *index in indexes) {
+    [indexPaths addObject:[NSIndexPath indexPathForItem: index.integerValue inSection:1]];
+  }
+  
+  if ([self.topCollectionView.visibleCells containsObject:indexPaths.firstObject]) {
+    [self.topCollectionView reloadItemsAtIndexPaths:indexPaths];
+  }
+  
+  if ([self.bottomCollectionView.visibleCells containsObject:indexPaths.firstObject]) {
+    [self.bottomCollectionView reloadItemsAtIndexPaths:indexPaths];
+  }
+}
+
+
+// MARk: - DataManagerDelegate
+
+- (void)changeBottomTextFieldTextTo:(NSString *)value inCellWithIndex:(NSUInteger)index {
+  ExchangeCell *cell = (ExchangeCell *)[self.bottomCollectionView cellForItemAtIndexPath:[self.bottomCollectionView indexPathsForVisibleItems].firstObject];
+  cell.valueTextField.text = [NSString stringWithFormat:@"%@", value];
 }
 
 
@@ -69,6 +117,7 @@
   } else {
     CGFloat pageWidth = self.bottomCollectionView.frame.size.width;
     self.bottomPageControl.currentPage = self.bottomCollectionView.contentOffset.x / pageWidth;
+    [self.dataManager selectCurrencyAtIndex:self.bottomPageControl.currentPage];
   }
 }
 

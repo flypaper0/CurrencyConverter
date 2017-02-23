@@ -10,19 +10,26 @@
 #import <UIKit/UIKit.h>
 #import "RateListService.h"
 #import "StorageService.h"
+#import "ExchangeCell.h"
 
 
 @protocol DataManagerDelegate <NSObject>
-- (void)reloadTopCollectionView;
-- (void)reloadBottomCollectionView;
+
+- (void)changeBottomTextFieldTextTo:(NSString *)value inCellWithIndex:(NSUInteger)index;
+
 @end
 
 
-@interface DataManager : NSObject <RateListServiceDelegate, StorageServiceDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface DataManager : NSObject <UICollectionViewDataSource, ExchangeCellDelegate>
 
-@property (nonatomic, weak) id <DataManagerDelegate> delegate;
+@property (weak, nonatomic) id <DataManagerDelegate> delegate;
+@property (strong, nonatomic) NSArray<Currency *> * currencies ;
+@property (strong, nonatomic) Currency *selectedCurrency;
+@property float valueForExchange;
 
 - (instancetype)initWithDelegate:(id <DataManagerDelegate>)delegate;
+- (void)selectCurrencyAtIndex:(NSUInteger)index;
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 
