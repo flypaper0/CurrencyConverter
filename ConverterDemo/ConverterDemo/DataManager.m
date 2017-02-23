@@ -18,73 +18,77 @@ static NSUInteger bottomCollectionViewTag = 1002;
 
 - (instancetype)initWithDelegate:(id <DataManagerDelegate>)delegate
 {
-  self = [super init];
-  if (self) {
-    self.delegate = delegate;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        self.delegate = delegate;
+    }
+    return self;
 }
 
 - (void)selectTopCurrencyAtIndex:(NSUInteger)index {
-  self.selectedTopCurrency = self.currencies[index];
+    self.selectedTopCurrency = self.currencies[index];
 }
 
 - (void)selectBottomCurrencyAtIndex:(NSUInteger)index {
-  self.selectedBottomCurrency = self.currencies[index];
+    self.selectedBottomCurrency = self.currencies[index];
+}
+
+- (BOOL)isCurrenciesEqual {
+    return self.selectedTopCurrency.currencyString == self.selectedBottomCurrency.currencyString;
 }
 
 // MARK: - CollectionView
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return self.currencies.count;
+    return self.currencies.count;
 }
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  ExchangeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-  cell.tag = indexPath.row;
-  
-  Currency *currency = self.currencies [indexPath.row];
-  cell.currencyLabel.text = currency.currencyString;
-  cell.balanceLabel.text = [NSString stringWithFormat:@"You have %@ %.2f", currency.returnCurrencySymbol, currency.amount];
-  
-  if (collectionView.tag == topCollectionViewTag) {
-    cell.delegate = self;
-  } else if (collectionView.tag == bottomCollectionViewTag) {
-    cell.valueTextField.userInteractionEnabled = NO;
-    cell.balanceLabel.textColor = [UIColor whiteColor];
-    cell.balanceLabel.alpha = 0.5;
+    ExchangeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    cell.tag = indexPath.row;
     
-    if (self.selectedTopCurrency.rateList.rates) {
-      
-      if (self.selectedTopCurrency.currencyString == currency.currencyString) {
-        cell.valueTextField.text = @"-";
-        return cell;
-      }
-      
-      NSDictionary* json = [NSJSONSerialization JSONObjectWithData:self.selectedTopCurrency.rateList.rates
-                                                           options:kNilOptions
-                                                             error:nil];
-      NSString *rateString = (NSString *)json[currency.currencyString];
-      float rate = rateString.floatValue;
-      cell.valueTextField.text = [NSString stringWithFormat:@"%.2f", self.valueForExchange * rate];
+    Currency *currency = self.currencies [indexPath.row];
+    cell.currencyLabel.text = currency.currencyString;
+    cell.balanceLabel.text = [NSString stringWithFormat:@"You have %@ %.2f", currency.returnCurrencySymbol, currency.amount];
+    
+    if (collectionView.tag == topCollectionViewTag) {
+        cell.delegate = self;
+    } else if (collectionView.tag == bottomCollectionViewTag) {
+        cell.valueTextField.userInteractionEnabled = NO;
+        cell.balanceLabel.textColor = [UIColor whiteColor];
+        cell.balanceLabel.alpha = 0.5;
+        
+        if (self.selectedTopCurrency.rateList.rates) {
+            
+            if (self.selectedTopCurrency.currencyString == currency.currencyString) {
+                cell.valueTextField.text = @"-";
+                return cell;
+            }
+            
+            NSDictionary* json = [NSJSONSerialization JSONObjectWithData:self.selectedTopCurrency.rateList.rates
+                                                                 options:kNilOptions
+                                                                   error:nil];
+            NSString *rateString = (NSString *)json[currency.currencyString];
+            float rate = rateString.floatValue;
+            cell.valueTextField.text = [NSString stringWithFormat:@"%.2f", self.valueForExchange * rate];
+        }
     }
-  }
-  
-  return cell;
+    
+    return cell;
 }
 
 
 // MARK: - ExchangeCellDelegate
 
 - (void)textFieldValueDidChangedTo:(float)value inCellWithIndex:(NSUInteger)index {
-  
-  self.valueForExchange = value;
-  
-  if ([self.delegate respondsToSelector:@selector(reloadBottomCollectionView)]) {
-    [self.delegate reloadBottomCollectionView];
-  }
-  
+    
+    self.valueForExchange = value;
+    
+    if ([self.delegate respondsToSelector:@selector(reloadBottomCollectionView)]) {
+        [self.delegate reloadBottomCollectionView];
+    }
+    
 }
 
 

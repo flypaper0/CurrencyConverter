@@ -21,11 +21,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="darkBG" translatesAutoresizingMaskIntoConstraints="NO" id="WoG-i8-j6K">
+                                <rect key="frame" x="0.0" y="224" width="375" height="443"/>
+                            </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1001" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="l5B-Es-TpK">
-                                <rect key="frame" x="0.0" y="64" width="375" height="135"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="160"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="135" id="Wca-YA-pwJ"/>
+                                    <constraint firstAttribute="height" constant="160" id="Wca-YA-pwJ"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="OQY-gM-POB">
                                     <size key="itemSize" width="50" height="50"/>
@@ -39,13 +42,13 @@
                                 </connections>
                             </collectionView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="e6z-G1-E4g">
-                                <rect key="frame" x="168" y="162" width="39" height="37"/>
+                                <rect key="frame" x="168" y="187" width="39" height="37"/>
                             </pageControl>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1002" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fbx-fO-7tK">
-                                <rect key="frame" x="0.0" y="199" width="375" height="135"/>
+                                <rect key="frame" x="0.0" y="224" width="375" height="160"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="135" id="M69-oh-Vdw"/>
+                                    <constraint firstAttribute="height" constant="160" id="M69-oh-Vdw"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="z0O-sO-54a">
                                     <size key="itemSize" width="50" height="50"/>
@@ -59,7 +62,7 @@
                                 </connections>
                             </collectionView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="caY-T1-Krm">
-                                <rect key="frame" x="168" y="314" width="39" height="37"/>
+                                <rect key="frame" x="168" y="364" width="39" height="37"/>
                             </pageControl>
                         </subviews>
                         <color key="backgroundColor" red="0.068161449932273979" green="0.42474869690624012" blue="0.94278139142820505" alpha="1" colorSpace="calibratedRGB"/>
@@ -69,9 +72,13 @@
                             <constraint firstItem="l5B-Es-TpK" firstAttribute="top" secondItem="fRK-Oc-4Ws" secondAttribute="bottom" id="8zN-No-ZLP"/>
                             <constraint firstItem="caY-T1-Krm" firstAttribute="top" secondItem="Fbx-fO-7tK" secondAttribute="bottom" constant="-20" id="AKi-zY-Uud"/>
                             <constraint firstAttribute="trailing" secondItem="Fbx-fO-7tK" secondAttribute="trailing" id="MVV-1X-GIB"/>
+                            <constraint firstAttribute="trailing" secondItem="WoG-i8-j6K" secondAttribute="trailing" id="Mnx-0A-Z10"/>
+                            <constraint firstItem="WoG-i8-j6K" firstAttribute="leading" secondItem="DTU-tP-Cs6" secondAttribute="leading" id="Pu8-lE-gUn"/>
                             <constraint firstItem="e6z-G1-E4g" firstAttribute="centerX" secondItem="DTU-tP-Cs6" secondAttribute="centerX" id="QDc-87-mG9"/>
                             <constraint firstItem="Fbx-fO-7tK" firstAttribute="leading" secondItem="DTU-tP-Cs6" secondAttribute="leading" id="SF4-QB-rGL"/>
                             <constraint firstItem="e6z-G1-E4g" firstAttribute="top" secondItem="l5B-Es-TpK" secondAttribute="bottom" constant="-37" id="TWR-xZ-9yC"/>
+                            <constraint firstItem="WoG-i8-j6K" firstAttribute="top" secondItem="l5B-Es-TpK" secondAttribute="bottom" id="WCj-8L-GF9"/>
+                            <constraint firstItem="7SG-IV-Ovl" firstAttribute="top" secondItem="WoG-i8-j6K" secondAttribute="bottom" id="fOC-9h-Gte"/>
                             <constraint firstAttribute="trailing" secondItem="l5B-Es-TpK" secondAttribute="trailing" id="yTC-Fb-rc7"/>
                             <constraint firstItem="Fbx-fO-7tK" firstAttribute="top" secondItem="e6z-G1-E4g" secondAttribute="bottom" id="yWK-za-my7"/>
                         </constraints>
@@ -96,6 +103,9 @@
                                 <state key="normal" title="Exchange">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="disabled">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="exchangeButtonPressed:" destination="Dx5-e3-T4p" eventType="touchUpInside" id="OJk-EA-bV4"/>
                                 </connections>
@@ -106,6 +116,7 @@
                     <connections>
                         <outlet property="bottomCollectionView" destination="Fbx-fO-7tK" id="12X-1F-Gwd"/>
                         <outlet property="bottomPageControl" destination="caY-T1-Krm" id="Tf0-Lo-XfA"/>
+                        <outlet property="exchangeButton" destination="Khb-s1-8bI" id="gmb-ky-x28"/>
                         <outlet property="topCollectionView" destination="l5B-Es-TpK" id="FuO-l5-a52"/>
                         <outlet property="topPageControl" destination="e6z-G1-E4g" id="CNW-CX-1iz"/>
                     </connections>
@@ -131,4 +142,7 @@
             <point key="canvasLocation" x="-748" y="137"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="darkBG" width="376" height="420"/>
+    </resources>
 </document>

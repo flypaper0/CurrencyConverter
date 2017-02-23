@@ -16,15 +16,18 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
 }
 
 
 // MARK: - UITextFieldDelegate
 - (IBAction)valueDidChanged:(UITextField *)sender {
-  if (([self.delegate respondsToSelector:@selector(textFieldValueDidChangedTo:inCellWithIndex:)])) {
-    [self.delegate textFieldValueDidChangedTo: sender.text.floatValue inCellWithIndex: self.tag];
-  }
+    if (([self.delegate respondsToSelector:@selector(textFieldValueDidChangedTo:inCellWithIndex:)])) {
+        [self.delegate textFieldValueDidChangedTo: sender.text.floatValue inCellWithIndex: self.tag];
+    }
+}
+
+- (void)prepareForReuse {
+    self.valueTextField.text = @"";
 }
 
 @end

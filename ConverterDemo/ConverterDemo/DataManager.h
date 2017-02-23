@@ -32,6 +32,7 @@
 
 - (void)selectTopCurrencyAtIndex:(NSUInteger)index;
 - (void)selectBottomCurrencyAtIndex:(NSUInteger)index;
+- (BOOL)isCurrenciesEqual;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;

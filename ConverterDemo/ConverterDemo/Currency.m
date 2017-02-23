@@ -11,34 +11,34 @@
 @implementation Currency
 
 - (instancetype)initWithIndex:(int)index currencyString:(NSString *)currencyString andAmount:(float)amount  {
-  self = [super init];
-  if (!self) {
-    return nil;
-  }
-  
-  self.index = index;
-  self.currencyString = currencyString;
-  self.amount = amount;
-  
-  return self;
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    self.index = index;
+    self.currencyString = currencyString;
+    self.amount = amount;
+    
+    return self;
 }
 
 + (NSString *)primaryKey {
-  return @"currencyString";
+    return @"currencyString";
 }
 
 // MARK: - Helpers
 
 + (NSArray *)allCurrencies {
-  return @[@"EUR",@"USD",@"GBP"];
+    return @[@"EUR",@"USD",@"GBP"];
 }
 
 + (NSArray *)symbols {
-  return @[@"€",@"$",@"£"];
+    return @[@"€",@"$",@"£"];
 }
 
 - (NSString *)returnCurrencySymbol {
-  return [Currency.symbols objectAtIndex:[Currency.allCurrencies indexOfObject:self.currencyString]];
+    return [Currency.symbols objectAtIndex:[Currency.allCurrencies indexOfObject:self.currencyString]];
 }
 
 

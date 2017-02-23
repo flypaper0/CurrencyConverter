@@ -12,6 +12,7 @@
 
 @protocol StorageServiceDelegate <NSObject>
 - (void)didExchangeCurrensies;
+- (void)didFailedExchangeWithError:(NSError *)error;
 - (void)didReceivedCurrenciesFromStorage:(NSArray<Currency *> *)currencies ;
 - (void)didUpdateCurrencies:(NSArray<Currency *> *)currency atIndexes:(NSArray<NSNumber *> *)indexes;
 @end

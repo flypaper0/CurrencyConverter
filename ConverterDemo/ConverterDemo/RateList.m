@@ -13,16 +13,16 @@
 @implementation RateList
 
 - (instancetype)initWithAttributes:(NSDictionary *)attributes {
-  self = [super init];
-  if (!self) {
-    return nil;
-  }
-  
-  self.base = [attributes valueForKeyPath:@"base"];
-  self.rates = [NSJSONSerialization dataWithJSONObject:[attributes valueForKeyPath:@"rates"]
-                                               options:NSJSONWritingPrettyPrinted error:nil];
-  
-  return self;
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    self.base = [attributes valueForKeyPath:@"base"];
+    self.rates = [NSJSONSerialization dataWithJSONObject:[attributes valueForKeyPath:@"rates"]
+                                                 options:NSJSONWritingPrettyPrinted error:nil];
+    
+    return self;
 }
 
 @end
